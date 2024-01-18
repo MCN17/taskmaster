@@ -62,6 +62,8 @@ var completeEditTask = function(taskName, taskType, taskId) {
         }
     };
 
+    saveTasks();
+
     formEl.removeAttribute("data-task-id");
     document.querySelector("#save-task").textContent = "Add Task";
 }
@@ -91,6 +93,7 @@ var createTaskEl = function(taskDataObj) {
 
         taskDataObj.id = taskIdCounter;
         tasks.push(taskDataObj);
+        saveTasks();
     
         // add entire list item to list
         tasksToDoEl.appendChild(listItemEl);
@@ -98,8 +101,8 @@ var createTaskEl = function(taskDataObj) {
         // increase task counter for the nest unique id
         taskIdCounter++;
 
-        console.log(taskDataObj);
-        console.log(taskDataObj.status);
+        // console.log(taskDataObj);
+        // console.log(taskDataObj.status);
 }
 
 var createTaskActions = function (taskId) {
@@ -184,6 +187,8 @@ var deleteTask = function(taskId) {
 
     // reassign tasks array to be the same as updatedTaskArr
     tasks = updatedTaskArr;
+
+    saveTasks();
 };
 
 var taskButtonHandler = function(event) {
@@ -235,7 +240,13 @@ var taskStatusChangeHandler = function(event) {
             }
         }
 
-        console.log(tasks);
+        // console.log(tasks);
+
+        saveTasks();
 };
+
+var saveTasks = function() {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+}
 
 pageContentEl.addEventListener("change", taskStatusChangeHandler);
